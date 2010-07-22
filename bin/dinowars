@@ -1,0 +1,62 @@
+require 'pp'
+require File.join(File.dirname(__FILE__), "..","lib", "tbs")
+
+forest = TBS::Terrain.new("Forest")
+grass = TBS::Terrain.new("Grass")
+mountains = TBS::Terrain.new("Mountains")
+plains = TBS::Terrain.new("Plains")
+water = TBS::Terrain.new("Water")
+
+terrain_key = {
+  "f" => forest,
+  "g" => grass,
+  "m" => mountains,
+  "p" => plains,
+  "w" => water,
+}
+
+map = TBS::Map.new terrain_key, <<-END
+  gggggggggg
+  gggggggwww
+  ggggggwwff
+  gggppppppp
+  ggppggwfpf
+  ggpgggwwff
+END
+
+game = TBS::Game::DinoWars.new
+
+human = TBS::Player::CLI.new("Human")
+computer = TBS::Player::DumbComputer.new("Computer")
+
+game.add_player(human)
+game.add_player(computer)
+
+nathan = TBS::Unit::Soldier.new(human, "Nathan")
+vik = TBS::Unit::Soldier.new(human, "Vik")
+winston = TBS::Unit::Doctor.new(human, "Winston")
+
+human.add_unit(nathan)
+human.add_unit(vik)
+human.add_unit(winston)
+
+game.add_map(map) do |map|
+  map.place(3, 0, nathan)
+  map.place(4, 0, vik)
+  map.place(5, 0, winston)
+
+  vr1 = TBS::Unit::VRaptor.new(computer, 'Velociraptor 1')
+  vr2 = TBS::Unit::VRaptor.new(computer, 'Velociraptor 2')
+  vr3 = TBS::Unit::VRaptor.new(computer, 'Velociraptor 3')
+
+  computer.clear_units
+  computer.add_unit(vr1)
+  computer.add_unit(vr2)
+  computer.add_unit(vr3)
+  
+  map.place(0, 5, vr1)
+  map.place(1, 5, vr2)
+  map.place(2, 5, vr3)
+end
+
+game.run
