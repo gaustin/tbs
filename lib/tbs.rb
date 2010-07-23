@@ -1,6 +1,11 @@
-%w(matrix choice map action player unit game).each do |file|
-  require File.join(File.dirname(__FILE__), "tbs", file)
-end
+$:.unshift File.dirname(__FILE__)
+require "tbs/matrix"
+require "tbs/choice"
+require "tbs/map"
+require "tbs/action"
+require "tbs/player"
+require "tbs/unit"
+require "tbs/game"
 
 class Class
   def shortname

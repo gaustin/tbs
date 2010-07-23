@@ -1,3 +1,3 @@
-%w(base dino_wars).each do |file|
-  require File.join(File.dirname(__FILE__), "game", file)
-end
+$:.unshift File.dirname(__FILE__)
+require "game/base"
+require "game/dino_wars"

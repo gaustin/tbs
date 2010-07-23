@@ -1,3 +1,4 @@
-%w(base dinosaur human).each do |file|
-  require File.join(File.dirname(__FILE__), "unit", file)
-end
+$:.unshift File.dirname(__FILE__)
+require "unit/base"
+require "unit/dinosaur"
+require "unit/human"
